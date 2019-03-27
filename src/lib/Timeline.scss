@@ -1,28 +1,38 @@
 $item-color: white;
 $item-background: #2196f3;
-$item-border: 1px solid #1a6fb3;
+$item-border: 1px solid transparent;
 $item-selected-color: white;
 $item-selected-background: #ffc107;
 $item-selected-border: 1px solid #ff9800;
 
 $row-background-even: transparent;
-$row-background-odd: rgba(0, 0, 0, 0.05);
+$row-background-odd: transparent;
+
+$month-0: #FFC300;
+$month-1: #FFE799;
+$month-2: #FFD23D;
 
 $border-color: #bbb;
 $border-width: 1px;
-$thick-border-width: 2px;
-$sidebar-color: #ffffff;
-$sidebar-background-color: #c52020;
-$header-color: #ffffff;
-$header-background-color: #c52020;
-$lower-header-color: #333333;
-$lower-header-background-color: #f0f0f0;
+$thick-border-width: 3px;
+$sidebar-color: #262627;
+$sidebar-background-color: #FAFAFA;
+$header-color: #262627;
+$header-background-color: #FAFAFA;
+$lower-header-color: #262627;
+$lower-header-background-color: #FAFAFA;
 $list-item-padding: 0 4px;
-$weekend: rgba(250, 246, 225, 0.5);
+$weekend: #3D3C3C;
+$today: #E8D434;
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
 
 .react-calendar-timeline {
   * {
     box-sizing: border-box;
+    position: relative;
   }
 
   .rct-outer {
@@ -33,6 +43,7 @@ $weekend: rgba(250, 246, 225, 0.5);
 
   .rct-scroll {
     display: inline-block;
+    position: relative;
     white-space: normal; // was set to nowrap in .rct-outer
     vertical-align: top;
     overflow-x: scroll;
@@ -61,6 +72,7 @@ $weekend: rgba(250, 246, 225, 0.5);
   }
 
   .rct-header-container {
+    position: relative;
     z-index: 90;
     display: flex;
     overflow: hidden;
@@ -93,6 +105,8 @@ $weekend: rgba(250, 246, 225, 0.5);
       background: $header-background-color;
       border-bottom: $border-width solid $border-color;
       cursor: pointer;
+      border-top: 0.5px solid rgb(187, 187, 187);
+
       &.rct-has-right-sidebar {
         border-right: ($thick-border-width / 2) solid $border-color;
         border-left: ($thick-border-width / 2) solid $border-color;
@@ -103,6 +117,18 @@ $weekend: rgba(250, 246, 225, 0.5);
         left: 5px;
         right: 5px;
       }
+    }
+
+    .rct-0 {
+      background: $month-0
+    }
+
+    .rct-1 {
+      background: $month-1
+    }
+
+    .rct-2 {
+      background: $month-2
     }
 
     .rct-label {
@@ -124,6 +150,27 @@ $weekend: rgba(250, 246, 225, 0.5);
       &.rct-first-of-type {
         border-left: $thick-border-width solid $border-color;
       }
+
+      &.today {
+        background: $today;
+      }
+
+      &.rct-day-0, &.rct-day-6 {
+        background: $weekend;
+        color: #FAFAFA
+      }
+
+      &.rct-0 {
+        background: $month-0
+      }
+
+      &.rct-1 {
+        background: $month-1
+      }
+
+      &.rct-2 {
+        background: $month-2
+      }
     }
   }
 
@@ -135,6 +182,11 @@ $weekend: rgba(250, 246, 225, 0.5);
     box-sizing: border-box;
     border-bottom: $border-width solid $border-color;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    border-top: 0.5px solid rgb(187, 187, 187);
 
     &.rct-sidebar-right {
       border-right: 0;
@@ -182,11 +234,12 @@ $weekend: rgba(250, 246, 225, 0.5);
       border-left: 1px solid $border-color;
       z-index: 30;
       &.rct-vl-first {
-        border-left-width: 2px;
+        border-left-width: 3px;
       }
       &.rct-day-6,
       &.rct-day-0 {
         background: $weekend;
+        z-index: 90;
       }
     }
   }
