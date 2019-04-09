@@ -24,6 +24,7 @@ $lower-header-background-color: #FAFAFA;
 $list-item-padding: 0 4px;
 $weekend: #3D3C3C;
 $today: #E8D434;
+$holidays: red;
 
 body {
   font-family: 'Montserrat', sans-serif;
@@ -53,7 +54,6 @@ body {
   }
 
   .rct-item {
-
 
     &:hover {
       z-index: 88;
@@ -239,8 +239,11 @@ body {
       &.rct-day-6,
       &.rct-day-0 {
         background: $weekend;
-        z-index: 90;
+        z-index: 89;
       }
+    }
+    &.holidays {
+      background: $holidays
     }
   }
 

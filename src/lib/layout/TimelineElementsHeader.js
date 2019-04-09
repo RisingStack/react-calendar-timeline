@@ -18,7 +18,8 @@ export default class TimelineElementsHeader extends Component {
     subHeaderLabelFormats: PropTypes.object.isRequired,
     headerLabelGroupHeight: PropTypes.number.isRequired,
     headerLabelHeight: PropTypes.number.isRequired,
-    scrollHeaderRef: PropTypes.func.isRequired
+    scrollHeaderRef: PropTypes.func.isRequired,
+    holidays: PropTypes.oneOfType([PropTypes.array, PropTypes.string]).isRequired
   }
 
   constructor(props) {
@@ -145,12 +146,16 @@ export default class TimelineElementsHeader extends Component {
           // have label content fill the entire width
           const contentWidth = Math.min(labelWidth, canvasWidth)
 
+          const month = Number(moment(time).format('MM')) % 3
+
           topHeaderLabels.push(
             <div
               key={`top-label-${time.valueOf()}`}
-              className={`rct-label-group${
-                hasRightSidebar ? ' rct-has-right-sidebar' : ''
-              }`}
+              className={`
+                rct-label-group
+                ${hasRightSidebar ? ' rct-has-right-sidebar' : ''}
+                ${nextUnit !== 'year' && `rct-${month}`}
+              `}
               onClick={() => this.handlePeriodClick(time, nextUnit)}
               style={{
                 left: `${left - 1}px`,
@@ -184,12 +189,22 @@ export default class TimelineElementsHeader extends Component {
         )
         const leftCorrect = firstOfType ? 1 : 0
 
+        const classTime = moment(time).format('YYYY-MM-DD')
+
+        const todayMarker = moment().format('YYYY-MM-DD') === classTime && 'today'
+
+        const month = Number(moment(time).format('MM')) % 3
+
         bottomHeaderLabels.push(
           <div
             key={`label-${time.valueOf()}`}
-            className={`rct-label ${twoHeaders ? '' : 'rct-label-only'} ${
-              firstOfType ? 'rct-first-of-type' : ''
-            } ${minUnit !== 'month' ? `rct-day-${time.day()}` : ''} `}
+            className={`
+              ${todayMarker}
+              rct-label
+              ${twoHeaders ? '' : 'rct-label-only'}
+              ${firstOfType ? 'rct-first-of-type' : ''}
+              ${minUnit !== 'month' ? `rct-day-${time.day()}` : `rct-${month}`}
+            `}
             onClick={() => this.handlePeriodClick(time, minUnit)}
             style={{
               left: `${left - leftCorrect}px`,
@@ -207,7 +222,9 @@ export default class TimelineElementsHeader extends Component {
               fontSize: `${
                 labelWidth > 30 ? '14' : labelWidth > 20 ? '12' : '10'
               }px`,
-              cursor: 'pointer'
+              cursor: 'pointer',
+              background: Array.from(this.props.holidays).includes(classTime) && '#C70039',
+              color: Array.from(this.props.holidays).includes(classTime) && '#FAFAFA'
             }}
           >
             {this.subHeaderLabel(time, minUnit, labelWidth)}

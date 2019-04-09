@@ -102,6 +102,8 @@ export default class ReactCalendarTimeline extends Component {
     headerRef: PropTypes.func,
     scrollRef: PropTypes.func,
 
+    holidays: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
+
     timeSteps: PropTypes.shape({
       second: PropTypes.number,
       minute: PropTypes.number,
@@ -217,6 +219,8 @@ export default class ReactCalendarTimeline extends Component {
     timeSteps: defaultTimeSteps,
     headerRef: () => {},
     scrollRef: () => {},
+
+    holidays: [],
 
     // if you pass in visibleTimeStart and visibleTimeEnd, you must also pass onTimeChange(visibleTimeStart, visibleTimeEnd),
     // which needs to update the props visibleTimeStart and visibleTimeEnd to the ones passed
@@ -371,7 +375,7 @@ export default class ReactCalendarTimeline extends Component {
     // We are a controlled component
     if (visibleTimeStart && visibleTimeEnd) {
       // Get the new canvas position
-      Object.assign(derivedState, 
+      Object.assign(derivedState,
         calculateScrollCanvas(
           visibleTimeStart,
           visibleTimeEnd,
@@ -384,7 +388,7 @@ export default class ReactCalendarTimeline extends Component {
     } else if (forceUpdate) {
       // Calculate new item stack position as canvas may have changed
       const canvasWidth = getCanvasWidth(prevState.width)
-      Object.assign(derivedState, 
+      Object.assign(derivedState,
         stackTimelineItems(
           items,
           groups,
@@ -410,7 +414,7 @@ export default class ReactCalendarTimeline extends Component {
   componentDidUpdate(prevProps, prevState) {
     const newZoom = this.state.visibleTimeEnd - this.state.visibleTimeStart
     const oldZoom = prevState.visibleTimeEnd - prevState.visibleTimeStart
-    
+
     // are we changing zoom? Report it!
     if (this.props.onZoom && newZoom !== oldZoom) {
         this.props.onZoom(this.getTimelineContext())
@@ -468,11 +472,11 @@ export default class ReactCalendarTimeline extends Component {
       groupHeights,
       groupTops,
     })
-    
+
     this.scrollComponent.scrollLeft = width
     this.headerRef.scrollLeft = width
   }
-  
+
   onScroll = scrollX => {
     const width = this.state.width
     let newScrollX = scrollX
@@ -491,7 +495,7 @@ export default class ReactCalendarTimeline extends Component {
     const canvasTimeStart = this.state.canvasTimeStart
 
     const zoom = this.state.visibleTimeEnd - this.state.visibleTimeStart
-    
+
     const visibleTimeStart = canvasTimeStart + zoom * scrollX / width
 
     if (
@@ -517,12 +521,12 @@ export default class ReactCalendarTimeline extends Component {
   ) => {
     this.setState(
       calculateScrollCanvas(
-        visibleTimeStart, 
-        visibleTimeEnd, 
-        forceUpdateDimensions, 
-        items, 
-        groups, 
-        this.props, 
+        visibleTimeStart,
+        visibleTimeEnd,
+        forceUpdateDimensions,
+        items,
+        groups,
+        this.props,
         this.state))
   }
 
@@ -820,12 +824,12 @@ export default class ReactCalendarTimeline extends Component {
     let label = null
 
     if (this.state.dragTime) {
-      label = `${moment(this.state.dragTime).format('LLL')}, 
+      label = `${moment(this.state.dragTime).format('LLL')},
         ${this.state.dragGroupTitle}`
     } else if (this.state.resizeTime) {
       label = moment(this.state.resizeTime).format('LLL')
     }
-    
+
     return label ? <InfoLabel label={label} /> : undefined
   }
 
@@ -869,6 +873,7 @@ export default class ReactCalendarTimeline extends Component {
         rightSidebarWidth={this.props.rightSidebarWidth}
         leftSidebarHeader={this.props.sidebarContent}
         rightSidebarHeader={this.props.rightSidebarContent}
+        holidays={this.props.holidays}
       />
     )
   }
@@ -876,7 +881,7 @@ export default class ReactCalendarTimeline extends Component {
   sidebar(height, groupHeights) {
     const { sidebarWidth } = this.props
     return (
-      sidebarWidth && 
+      sidebarWidth &&
       <Sidebar
         groups={this.props.groups}
         groupRenderer={this.props.groupRenderer}
