@@ -24,7 +24,6 @@ $lower-header-background-color: #FAFAFA;
 $list-item-padding: 0 4px;
 $weekend: #3D3C3C;
 $today: #E8D434;
-$holidays: red;
 
 body {
   font-family: 'Montserrat', sans-serif;
@@ -241,9 +240,6 @@ body {
         background: $weekend;
         z-index: 89;
       }
-    }
-    &.holidays {
-      background: $holidays
     }
   }
 

@@ -195,6 +195,9 @@ export default class TimelineElementsHeader extends Component {
 
         const month = Number(moment(time).format('MM')) % 3
 
+        console.log(this.props.holidays)
+        console.log(Array.from(this.props.holidays).includes(classTime))
+
         bottomHeaderLabels.push(
           <div
             key={`label-${time.valueOf()}`}
@@ -207,6 +210,8 @@ export default class TimelineElementsHeader extends Component {
             `}
             onClick={() => this.handlePeriodClick(time, minUnit)}
             style={{
+              background: Array.from(this.props.holidays).includes(classTime) && '#C70039',
+              color: Array.from(this.props.holidays).includes(classTime) && '#FAFAFA',
               left: `${left - leftCorrect}px`,
               width: `${labelWidth}px`,
               height: `${
@@ -222,9 +227,7 @@ export default class TimelineElementsHeader extends Component {
               fontSize: `${
                 labelWidth > 30 ? '14' : labelWidth > 20 ? '12' : '10'
               }px`,
-              cursor: 'pointer',
-              background: Array.from(this.props.holidays).includes(classTime) && '#C70039',
-              color: Array.from(this.props.holidays).includes(classTime) && '#FAFAFA'
+              cursor: 'pointer'
             }}
           >
             {this.subHeaderLabel(time, minUnit, labelWidth)}
