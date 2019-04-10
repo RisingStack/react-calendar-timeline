@@ -195,9 +195,6 @@ export default class TimelineElementsHeader extends Component {
 
         const month = Number(moment(time).format('MM')) % 3
 
-        console.log(this.props.holidays)
-        console.log(Array.from(this.props.holidays).includes(classTime))
-
         bottomHeaderLabels.push(
           <div
             key={`label-${time.valueOf()}`}
