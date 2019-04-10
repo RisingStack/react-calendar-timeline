@@ -151,14 +151,15 @@ body {
         border-left: $thick-border-width solid $border-color;
       }
 
+      &.nationalHoliday {
+        color: #FAFAFA;
+        background: $nationalHoliday;
+      }
+
       &.today {
         background: $today;
       }
 
-      &.nationalHoliday {
-        color: #FAFAFA;
-        background: $nationalHoliday !important;
-      }
 
       &.rct-day-0, &.rct-day-6 {
         background: $weekend;
