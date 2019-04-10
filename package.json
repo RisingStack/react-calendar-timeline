@@ -1,6 +1,6 @@
 {
   "name": "@risingstack/react-calendar-timeline",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "react calendar timeline",
   "main": "lib/index.js",
   "scripts": {

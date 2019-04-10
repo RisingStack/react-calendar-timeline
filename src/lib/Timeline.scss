@@ -24,6 +24,7 @@ $lower-header-background-color: #FAFAFA;
 $list-item-padding: 0 4px;
 $weekend: #3D3C3C;
 $today: #E8D434;
+$nationalHoliday: #C70039;
 
 body {
   font-family: 'Montserrat', sans-serif;
@@ -156,7 +157,7 @@ body {
 
       &.nationalHoliday {
         color: #FAFAFA;
-        background: #C70039;
+        background: $nationalHoliday !important;
       }
 
       &.rct-day-0, &.rct-day-6 {
